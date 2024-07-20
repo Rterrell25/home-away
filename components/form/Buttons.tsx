@@ -8,7 +8,7 @@ type SubmitButtonProps = {
   text?: string
 }
 
-export const SubmitButon = ({
+export const SubmitButton = ({
   className,
   text = 'Submit'
 }: SubmitButtonProps) => {
