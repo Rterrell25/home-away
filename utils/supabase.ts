@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import db from './db'
 
 const bucket = 'home-away'
 
@@ -7,7 +8,45 @@ const key = process.env.SUPABASE_KEY as string
 
 const supabase = createClient(url, key)
 
-export const uploadImage = async (image: File) => {
+interface ImageData {
+  id: Record<string, string>
+  tableName: string
+  fieldName: string
+}
+
+const deleteOldImage = async (publicUrl: string): Promise<void> => {
+  if (publicUrl) {
+    const pathname = publicUrl.replace(
+      `https://tdflxrycxumvirqxdzyp.supabase.co/storage/v1/object/public/${bucket}/`,
+      ''
+    )
+    const { error } = await supabase.storage.from(bucket).remove([pathname])
+    if (error) throw new Error('Failed to delete old image file')
+  }
+}
+
+const getOldImageUrl = async (
+  tableName: string,
+  id: Record<string, string>,
+  fieldName: string
+): Promise<string | null> => {
+  const record = await (db as any)[tableName].findUnique({
+    where: { ...id }
+  })
+
+  return record?.[fieldName]
+}
+
+export const uploadImage = async (
+  image: File,
+  { id, tableName, fieldName }: ImageData
+): Promise<string> => {
+  const oldImageUrl = await getOldImageUrl(tableName, id, fieldName)
+
+  if (oldImageUrl) {
+    await deleteOldImage(oldImageUrl)
+  }
+
   const timestamp = Date.now()
   const newName = `${timestamp}-${image.name}`
   const { data } = await supabase.storage
