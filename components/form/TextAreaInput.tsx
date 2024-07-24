@@ -7,7 +7,11 @@ type TextAreaInputProps = {
   defaultValue?: string
 }
 
-const TextAreaInput = ({ name, labelText, defaultValue }: TextAreaInputProps) => {
+const TextAreaInput = ({
+  name,
+  labelText,
+  defaultValue
+}: TextAreaInputProps) => {
   return (
     <div className='mb-2'>
       <Label htmlFor={name} className='capitalize'>
