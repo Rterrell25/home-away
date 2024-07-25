@@ -39,12 +39,15 @@ const getOldImageUrl = async (
 
 export const uploadImage = async (
   image: File,
-  { id, tableName, fieldName }: ImageData
+  imageData: ImageData | null
 ): Promise<string> => {
-  const oldImageUrl = await getOldImageUrl(tableName, id, fieldName)
+  if (imageData) {
+    const { tableName, id, fieldName } = imageData
+    const oldImageUrl = await getOldImageUrl(tableName, id, fieldName)
 
-  if (oldImageUrl) {
-    await deleteOldImage(oldImageUrl)
+    if (oldImageUrl) {
+      await deleteOldImage(oldImageUrl)
+    }
   }
 
   const timestamp = Date.now()
