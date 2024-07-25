@@ -7,6 +7,7 @@ import CategoriesInput from '@/components/form/CategoriesInput'
 import TextAreaInput from '@/components/form/TextAreaInput'
 import CountriesInput from '@/components/form/CountriesInput'
 import ImageInput from '@/components/form/ImageInput'
+import CounterInput from '@/components/form/CounterInput'
 
 const CreatePropertyPage = () => {
   return (
@@ -14,7 +15,7 @@ const CreatePropertyPage = () => {
       <h1 className='text-2xl font-semibold mb-8 capitalize'>
         Create property
       </h1>
-      <div className='border p-8 rounded'>
+      <div className='border md:p-8 p-4 rounded'>
         <h3 className='text-lg mb-4 font-medium'>General Info</h3>
         <FormContainer action={createPropertyAction}>
           <div className='grid md:grid-cols-2 gap-8 mb-4'>
@@ -41,6 +42,13 @@ const CreatePropertyPage = () => {
             <CountriesInput />
             <ImageInput />
           </div>
+          <h3 className='text-lg mt-8 mb-4 font-medium'>
+            Accomodation Details
+          </h3>
+          <CounterInput detail='guests' />
+          <CounterInput detail='bedrooms' />
+          <CounterInput detail='beds' />
+          <CounterInput detail='baths' />
           <SubmitButton text='create rental' className='mt-12' />
         </FormContainer>
       </div>
