@@ -154,13 +154,18 @@ export const createPropertyAction = async (
     const image = formData.get('image') as File
     const validatedFile = validateWithZodSchema(imageSchema, { image })
     const validatedFields = validateWithZodSchema(propertySchema, rawData)
+    const fullPath = await uploadImage(validatedFile.image, null)
 
-    console.log(validatedFields)
-
-    return { message: 'property created' }
+    await db.property.create({
+      data: {
+        ...validatedFields,
+        image: fullPath,
+        profileId: user.id
+      }
+    })
   } catch (error) {
     return renderError(error)
   }
 
-  // redirect('/')
+  redirect('/')
 }
