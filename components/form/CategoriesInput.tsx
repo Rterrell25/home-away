@@ -10,7 +10,6 @@ import {
 import { Prisma } from '@prisma/client'
 
 const name = Prisma.PropertyScalarFieldEnum.category
-console.log(name)
 
 const CategoriesInput = ({ defaultValue }: { defaultValue?: string }) => {
   return (
