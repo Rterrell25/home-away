@@ -24,7 +24,7 @@ const PropertiesContainer = async ({
     )
   }
 
-  return <PropertiesContainer properties={properties} />
+  return <PropertiesList properties={properties} />
 }
 
 export default PropertiesContainer
